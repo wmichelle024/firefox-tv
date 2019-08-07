@@ -66,6 +66,10 @@ fun EngineView.observePlaybackState() {
     evalJS(JS_OBSERVE_PLAYBACK_STATE)
 }
 
+fun EngineView.runFathomScript(script: String) {
+    evalJS(script)
+}
+
 private fun EngineView.evalJSWithTargetVideo(getExpressionToEval: (videoId: String) -> String) {
     val ID_TARGET_VIDEO = "targetVideo"
     val GET_TARGET_VIDEO_OR_RETURN = """

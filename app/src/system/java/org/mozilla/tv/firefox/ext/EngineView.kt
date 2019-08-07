@@ -80,6 +80,10 @@ fun EngineView.restoreDomElement() {
     evalJS(RESTORE_JS)
 }
 
+fun EngineView.runFathomScript(script: String) {
+    evalJS(script)
+}
+
 fun EngineView.observePlaybackState() {
     evalJS(JS_OBSERVE_PLAYBACK_STATE)
 }
