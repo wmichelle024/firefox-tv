@@ -1,0 +1,28 @@
+{
+  "name": "fathom-android-experiments",
+  "version": "0.0.1",
+  "description": "Experiments to use fathom in Android",
+  "repository": "https://github.com/mcomella/fathom-android-experiments",
+  "main": "js/index.js",
+  "author": "Michael Comella (mcomella)",
+  "license": "MPL-2.0",
+  "dependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "fathom-web": "3.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-transform-exponentiation-operator": "^7.2.0",
+    "@babel/preset-env": "^7.5.5",
+    "babel-loader": "^8.0.6",
+    "babel-polyfill": "^6.26.0",
+    "webpack": "4.35.0",
+    "webpack-cli": "3.3.5"
+  },
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack -w"
+  }
+}
