@@ -16,6 +16,7 @@ import org.mozilla.tv.firefox.ext.map
 import org.mozilla.tv.firefox.helpers.ext.assertValues
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTile
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileRepo
+import org.mozilla.tv.firefox.fathom.Fathom
 import org.mozilla.tv.firefox.session.SessionRepo
 import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
 import org.mozilla.tv.firefox.utils.PreventLiveDataMainLooperCrashRule
@@ -35,6 +36,7 @@ class ToolbarViewModelTest {
     private lateinit var sessionRepo: SessionRepo
     private lateinit var pinnedTileRepo: PinnedTileRepo
     private lateinit var telemetryIntegration: TelemetryIntegration
+    private lateinit var fathom: Fathom
 
     private lateinit var sessionState: Subject<SessionRepo.State>
     private lateinit var pinnedTiles: Subject<LinkedHashMap<String, PinnedTile>>
@@ -48,7 +50,7 @@ class ToolbarViewModelTest {
         pinnedTiles = BehaviorSubject.create()
         `when`(pinnedTileRepo.pinnedTiles).thenReturn(pinnedTiles)
         telemetryIntegration = mock(TelemetryIntegration::class.java)
-        toolbarVm = ToolbarViewModel(sessionRepo, pinnedTileRepo, telemetryIntegration)
+        toolbarVm = ToolbarViewModel(sessionRepo, pinnedTileRepo, telemetryIntegration, fathom)
     }
 
     @Test

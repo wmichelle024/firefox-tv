@@ -42,9 +42,9 @@ function totalImageToTextSizeRatio() {
     for (let e of allElem) {
         if (e.offsetHeight != null && e.offsetWidth != null && isVisible(e)) {
             if (hasImageAttribute(e)) {
+                console.log("Class: " + e.className + " Size: " + e.offsetHeight * e.offsetWidth);
                 artSize += e.offsetHeight * e.offsetWidth;
             } else if (elementText(e)) {
-                console.log("Class: " + e.className + " Text: " + elementText(e) + " Size: " + e.offsetHeight * e.offsetWidth);
                 textSize += e.offsetHeight * e.offsetWidth;
             }
         }

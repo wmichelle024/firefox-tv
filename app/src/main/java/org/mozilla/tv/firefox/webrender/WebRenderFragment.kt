@@ -77,14 +77,12 @@ class WebRenderFragment : EngineViewLifecycleFragment(), Session.Observer {
     private val youtubeBackHandler by lazy { YouTubeBackHandler(engineView!!, activity as MainActivity) }
 
     private lateinit var webRenderViewModel: WebRenderViewModel
-    private lateinit var fathom: Fathom
     private var rootView: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initSession()
 
-        fathom = Fathom(activity as MainActivity)
         webRenderViewModel = FirefoxViewModelProviders.of(this).get(WebRenderViewModel::class.java)
     }
 
@@ -154,7 +152,7 @@ class WebRenderFragment : EngineViewLifecycleFragment(), Session.Observer {
 
     // TODO: this method needs to be renamed (#2053); preliminary onStart() setup
     override fun onEngineViewCreated(engineView: EngineView): Disposable? {
-        fathom.onCreateEngineView(engineView, session)
+        serviceLocator?.fathom?.onCreateEngineView(engineView)
         return serviceLocator?.screenController?.currentActiveScreen?.subscribe {
             if (it != ActiveScreen.WEB_RENDER) {
                 // Pause all the videos when transitioning out of [WebRenderFragment] to mitigate possible

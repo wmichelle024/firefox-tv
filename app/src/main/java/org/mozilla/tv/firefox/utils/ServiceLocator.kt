@@ -25,6 +25,7 @@ import org.mozilla.tv.firefox.framework.FrameworkRepo
 import org.mozilla.tv.firefox.channels.ChannelRepo
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileImageUtilWrapper
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileRepo
+import org.mozilla.tv.firefox.fathom.Fathom
 import org.mozilla.tv.firefox.pocket.PocketEndpointRaw
 import org.mozilla.tv.firefox.pocket.PocketVideoFetchScheduler
 import org.mozilla.tv.firefox.pocket.PocketVideoJSONValidator
@@ -78,6 +79,7 @@ open class ServiceLocator(val app: Application) {
     val intentLiveData by lazy { MutableLiveData<Consumable<ValidatedIntentData?>>() }
     val fretboardProvider: FretboardProvider by lazy { FretboardProvider(app) }
     val experimentsProvider by lazy { ExperimentsProvider(fretboardProvider.fretboard, app) }
+    val fathom by lazy { Fathom(app) }
     val turboMode: TurboMode by lazy { TurboMode(app) }
     val viewModelFactory by lazy { ViewModelFactory(this, app) }
     val screenController by lazy { ScreenController(sessionRepo) }

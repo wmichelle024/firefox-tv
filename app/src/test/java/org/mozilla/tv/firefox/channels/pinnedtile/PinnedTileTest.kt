@@ -25,6 +25,7 @@ import org.mozilla.tv.firefox.ScreenController
 import org.mozilla.tv.firefox.navigationoverlay.NavigationOverlayViewModel
 import org.mozilla.tv.firefox.channels.ChannelDetails
 import org.mozilla.tv.firefox.channels.ChannelRepo
+import org.mozilla.tv.firefox.fathom.Fathom
 import org.mozilla.tv.firefox.navigationoverlay.ChannelTitles
 import org.mozilla.tv.firefox.navigationoverlay.ToolbarViewModel
 import org.mozilla.tv.firefox.session.SessionRepo
@@ -62,6 +63,7 @@ class PinnedTileTest {
     private lateinit var pinnedTileRepo: PinnedTileRepo
     private lateinit var testObserver: TestObserver<ChannelDetails>
     private lateinit var channelTitles: ChannelTitles
+    private lateinit var fathom: Fathom
 
     @Suppress("DEPRECATION")
     @Before
@@ -90,7 +92,8 @@ class PinnedTileTest {
                 channelRepo,
                 ToolbarViewModel(
                     sessionRepo = sessionRepo,
-                    pinnedTileRepo = pinnedTileRepo
+                    pinnedTileRepo = pinnedTileRepo,
+                    fathom = fathom
                 )
         )
         testObserver = overlayVm.pinnedTiles.test()

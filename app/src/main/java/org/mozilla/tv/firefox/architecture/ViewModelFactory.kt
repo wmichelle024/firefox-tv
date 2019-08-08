@@ -47,7 +47,8 @@ class ViewModelFactory(
 
             ToolbarViewModel::class.java -> ToolbarViewModel(
                 sessionRepo = serviceLocator.sessionRepo,
-                pinnedTileRepo = serviceLocator.pinnedTileRepo
+                pinnedTileRepo = serviceLocator.pinnedTileRepo,
+                fathom = serviceLocator.fathom
             ) as T
 
             SettingsViewModel::class.java -> SettingsViewModel(
@@ -67,7 +68,8 @@ class ViewModelFactory(
                 serviceLocator.channelRepo,
                 ToolbarViewModel(
                         sessionRepo = serviceLocator.sessionRepo,
-                        pinnedTileRepo = serviceLocator.pinnedTileRepo
+                        pinnedTileRepo = serviceLocator.pinnedTileRepo,
+                        fathom = serviceLocator.fathom
                 )
             ) as T
 

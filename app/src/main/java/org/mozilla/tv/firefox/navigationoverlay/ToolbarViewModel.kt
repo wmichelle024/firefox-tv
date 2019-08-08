@@ -16,6 +16,7 @@ import io.reactivex.subjects.BehaviorSubject
 import mozilla.components.support.base.observer.Consumable
 import org.mozilla.tv.firefox.R
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileRepo
+import org.mozilla.tv.firefox.fathom.Fathom
 import org.mozilla.tv.firefox.session.SessionRepo
 import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
 import org.mozilla.tv.firefox.utils.URLs
@@ -24,7 +25,8 @@ import org.mozilla.tv.firefox.utils.UrlUtils
 class ToolbarViewModel(
     private val sessionRepo: SessionRepo,
     private val pinnedTileRepo: PinnedTileRepo,
-    private val telemetryIntegration: TelemetryIntegration = TelemetryIntegration.INSTANCE
+    private val telemetryIntegration: TelemetryIntegration = TelemetryIntegration.INSTANCE,
+    private val fathom: Fathom
 ) : ViewModel() {
 
     data class State(
@@ -109,6 +111,7 @@ class ToolbarViewModel(
         } else {
             pinnedTileRepo.addPinnedTile(url, sessionRepo.currentURLScreenshot())
             _events.onNext(Consumable.from(Action.ShowTopToast(R.string.notification_pinned_site)))
+            fathom.runFathomScript()
         }
         hideOverlay()
     }
@@ -169,4 +172,5 @@ class ToolbarViewModel(
     private fun hideOverlay() {
         _events.onNext(Consumable.from(Action.SetOverlayVisible(false)))
     }
+
 }
