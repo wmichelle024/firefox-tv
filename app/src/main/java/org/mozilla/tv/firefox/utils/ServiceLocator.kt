@@ -16,6 +16,7 @@ import org.mozilla.tv.firefox.fxa.FxaRepo
 import org.mozilla.tv.firefox.ScreenController
 import org.mozilla.tv.firefox.ValidatedIntentData
 import org.mozilla.tv.firefox.architecture.ViewModelFactory
+import org.mozilla.tv.firefox.channels.ChannelListAdapter
 import org.mozilla.tv.firefox.components.locale.LocaleManager
 import org.mozilla.tv.firefox.experiments.ExperimentsProvider
 import org.mozilla.tv.firefox.experiments.FretboardProvider
@@ -79,7 +80,8 @@ open class ServiceLocator(val app: Application) {
     val intentLiveData by lazy { MutableLiveData<Consumable<ValidatedIntentData?>>() }
     val fretboardProvider: FretboardProvider by lazy { FretboardProvider(app) }
     val experimentsProvider by lazy { ExperimentsProvider(fretboardProvider.fretboard, app) }
-    val fathom by lazy { Fathom(app) }
+    val channelListAdapter by lazy{ ChannelListAdapter()}
+    val fathom by lazy { Fathom(app, channelListAdapter) }
     val turboMode: TurboMode by lazy { TurboMode(app) }
     val viewModelFactory by lazy { ViewModelFactory(this, app) }
     val screenController by lazy { ScreenController(sessionRepo) }

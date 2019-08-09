@@ -3,12 +3,17 @@ package org.mozilla.tv.firefox.fathom
 import android.content.Context
 import android.util.Log
 import android.webkit.JavascriptInterface
+import androidx.annotation.UiThread
 import mozilla.components.concept.engine.EngineView
 import org.mozilla.tv.firefox.R
+import org.mozilla.tv.firefox.channels.ChannelListAdapter
 import org.mozilla.tv.firefox.ext.addJavascriptInterface
 import org.mozilla.tv.firefox.ext.runFathomScript
 
-class Fathom(private val context: Context) {
+class Fathom(
+        private val context: Context,
+        private val channelListAdapter: ChannelListAdapter
+) {
 
     private var engineView: EngineView? = null
     //private var sessionIsLoadingObserver: SessionIsLoadingObserver? = null
@@ -36,8 +41,13 @@ class Fathom(private val context: Context) {
 
     inner class FathomObject {
         @JavascriptInterface
+        @UiThread
         fun setTitle(title: String) {
-            Log.d("michelle", title)
+            if (title.toFloat() > 0.5) {
+                channelListAdapter.showDialog(R.string.music_channel_title)
+            } else {
+                channelListAdapter.showDialog()
+            }
         }
     }
 

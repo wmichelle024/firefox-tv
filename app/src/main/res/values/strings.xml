@@ -147,6 +147,7 @@
     <!-- Label shown underneath Pin icon in toolbar when a site is already pinned, to hint to users that
          they can unpin the site to remove it-->
     <string name="unpin_label">Unpin from homescreen</string>
+    <string name="pin_confirm">Pin to channel</string>
     <string name="notification_pinned_site">Pinned to Firefox TV homescreen</string>
     <string name="notification_unpinned_site">Removed from Firefox TV homescreen</string>
 
