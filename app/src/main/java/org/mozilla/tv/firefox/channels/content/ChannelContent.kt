@@ -22,4 +22,5 @@ object ChannelContent {
      */
     fun setImage(id: Int): ImageSetStrategy = ImageSetStrategy.ById(id)
     var musicChannels: Observable<List<ChannelTile>> = _musicChannels.hide()
+    var sportsChannels : Observable<List<ChannelTile>> = _sportsChannels.hide()
 }

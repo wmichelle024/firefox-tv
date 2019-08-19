@@ -52,6 +52,7 @@ import org.mozilla.tv.firefox.channels.SettingsChannelAdapter
 import org.mozilla.tv.firefox.channels.SettingsScreen
 import org.mozilla.tv.firefox.channels.content.ChannelContent
 import org.mozilla.tv.firefox.channels.content.refreshMusicTiles
+import org.mozilla.tv.firefox.channels.content.refreshSportsTiles
 import org.mozilla.tv.firefox.pocket.PocketViewModel
 import org.mozilla.tv.firefox.telemetry.MenuInteractionMonitor
 import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
@@ -232,6 +233,7 @@ class NavigationOverlayFragment : Fragment() {
 
         fxaButton.isVisible = serviceLocator.experimentsProvider.shouldShowSendTab()
         ChannelContent.refreshMusicTiles()
+        ChannelContent.refreshSportsTiles()
     }
 
     override fun onStop() {
