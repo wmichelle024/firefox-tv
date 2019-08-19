@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.dialog_pin_site.cancelButton
 import org.mozilla.tv.firefox.R
 import org.mozilla.tv.firefox.channels.content.ChannelContent
 import org.mozilla.tv.firefox.channels.content.addToMusicChannel
+import org.mozilla.tv.firefox.channels.content.addToNewsChannel
 import org.mozilla.tv.firefox.channels.content.addToSportsChannel
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileRepo
 import org.mozilla.tv.firefox.session.SessionRepo
@@ -62,6 +63,7 @@ class ChannelListAdapter(
             when (title) {
                 R.string.music_channel_title -> ChannelContent.addToMusicChannel(channelTile)
                 R.string.sports_channel_title -> ChannelContent.addToSportsChannel(channelTile)
+                R.string.news_channel_title -> ChannelContent.addToNewsChannel(channelTile)
                 else -> pinnedTileRepo.addPinnedTile(url,sessionRepo.currentURLScreenshot())
             }
             dialog.dismiss()
@@ -73,18 +75,9 @@ class ChannelListAdapter(
         dialog.show()
     }
 
-//    fun showDialog(title: Int = 0) {
-//        dialog.show()
-//    }
-
     fun setSelected(title: Int) {
         var index = channelTitles.indexOf(title)
         spinner.setSelection(index)
-    }
-
-    fun dismissDialog() {
-        Handler(Looper.getMainLooper())
-                .post{dialog.dismiss()}
     }
 
 }

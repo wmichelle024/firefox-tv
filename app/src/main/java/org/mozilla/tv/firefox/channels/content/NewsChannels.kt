@@ -4,11 +4,13 @@
 
 package org.mozilla.tv.firefox.channels.content
 
+import io.reactivex.subjects.BehaviorSubject
 import org.mozilla.tv.firefox.R
 import org.mozilla.tv.firefox.channels.ChannelTile
 import org.mozilla.tv.firefox.channels.TileSource
+import org.mozilla.tv.firefox.channels.content.ChannelContent.setImage
 
-fun ChannelContent.getNewsChannels(): List<ChannelTile> = listOf(
+val newsTiles : MutableList<ChannelTile> = mutableListOf(
     ChannelTile(
         url = "https://us.cnn.com/videos",
         title = "CNN",
@@ -82,3 +84,18 @@ fun ChannelContent.getNewsChannels(): List<ChannelTile> = listOf(
         id = "vice"
     )
 )
+
+fun ChannelContent.getNewsChannels() = newsTiles
+
+val _newsChannels: BehaviorSubject<List<ChannelTile>> = BehaviorSubject.create()
+
+
+fun ChannelContent.addToNewsChannel(channelTile: ChannelTile) {
+    newsTiles.add(0, channelTile)
+    refreshNewsTiles()
+}
+
+fun ChannelContent.refreshNewsTiles() {
+    _newsChannels.onNext(ChannelContent.getNewsChannels())
+
+}
