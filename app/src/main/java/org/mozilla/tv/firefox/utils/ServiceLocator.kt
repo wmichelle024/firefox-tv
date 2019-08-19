@@ -80,7 +80,7 @@ open class ServiceLocator(val app: Application) {
     val intentLiveData by lazy { MutableLiveData<Consumable<ValidatedIntentData?>>() }
     val fretboardProvider: FretboardProvider by lazy { FretboardProvider(app) }
     val experimentsProvider by lazy { ExperimentsProvider(fretboardProvider.fretboard, app) }
-    val channelListAdapter by lazy{ ChannelListAdapter()}
+    val channelListAdapter by lazy{ ChannelListAdapter(sessionRepo, pinnedTileRepo)}
     val fathom by lazy { Fathom(app, channelListAdapter) }
     val turboMode: TurboMode by lazy { TurboMode(app) }
     val viewModelFactory by lazy { ViewModelFactory(this, app) }

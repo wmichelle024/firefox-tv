@@ -4,6 +4,8 @@
 
 package org.mozilla.tv.firefox.channels.content
 
+import io.reactivex.Observable
+import org.mozilla.tv.firefox.channels.ChannelTile
 import org.mozilla.tv.firefox.channels.ImageSetStrategy
 
 /**
@@ -14,10 +16,10 @@ import org.mozilla.tv.firefox.channels.ImageSetStrategy
  * into separate files.
  */
 object ChannelContent {
-
     /**
      * Helper function shared by various content files. See [getNewsChannels]
      * for an example.
      */
     fun setImage(id: Int): ImageSetStrategy = ImageSetStrategy.ById(id)
+    var musicChannels: Observable<List<ChannelTile>> = _musicChannels.hide()
 }

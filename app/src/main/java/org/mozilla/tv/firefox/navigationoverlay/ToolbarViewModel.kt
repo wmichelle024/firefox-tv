@@ -109,8 +109,8 @@ class ToolbarViewModel(
             pinnedTileRepo.removePinnedTile(url)
             _events.onNext(Consumable.from(Action.ShowTopToast(R.string.notification_unpinned_site)))
         } else {
-            pinnedTileRepo.addPinnedTile(url, sessionRepo.currentURLScreenshot())
-            _events.onNext(Consumable.from(Action.ShowTopToast(R.string.notification_pinned_site)))
+//            pinnedTileRepo.addPinnedTile(url, sessionRepo.currentURLScreenshot())
+//            _events.onNext(Consumable.from(Action.ShowTopToast(R.string.notification_pinned_site)))
             fathom.runFathomScript()
         }
         hideOverlay()

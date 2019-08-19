@@ -106,8 +106,7 @@ class MainActivity : LocaleAwareAppCompatActivity(), OnUrlEnteredListener, Media
         }
 
         serviceLocator.intentLiveData.value = Consumable.from(intentData)
-
-        serviceLocator.channelListAdapter.onViewCreated(this)
+        serviceLocator.channelListAdapter.onCreate(this)
 
         // Debug logging display for non public users
         // TODO: refactor out the debug variant visibility check in #1953

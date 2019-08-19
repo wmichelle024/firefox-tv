@@ -25,28 +25,16 @@ class Fathom(
             addJavascriptInterface(FathomObject(), "java")
         }
 
-//        val sessionIsLoadingObserver = SessionIsLoadingObserver(engineView, session)
-//        session.register(sessionIsLoadingObserver, owner = context)
-//        this.sessionIsLoadingObserver = sessionIsLoadingObserver
     }
-
-//    inner class SessionIsLoadingObserver(private val engineView: EngineView, private val session: Session) : Session.Observer {
-//        override fun onLoadingStateChanged(session: Session, loading: Boolean) {
-//            if (!loading) {
-//                // TODO only inject once
-//                    engineView.runFathomScript(script)
-//            }
-//        }
-//    }
 
     inner class FathomObject {
         @JavascriptInterface
         @UiThread
         fun setTitle(title: String) {
             if (title.toFloat() > 0.5) {
-                channelListAdapter.showDialog(R.string.music_channel_title)
+                channelListAdapter.onCreateDialog(R.string.music_channel_title)
             } else {
-                channelListAdapter.showDialog()
+                channelListAdapter.onCreateDialog()
             }
         }
     }

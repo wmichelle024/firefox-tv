@@ -14,7 +14,6 @@ import io.reactivex.rxkotlin.Observables
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import org.mozilla.tv.firefox.channels.content.ChannelContent
-import org.mozilla.tv.firefox.channels.content.getMusicChannels
 import org.mozilla.tv.firefox.channels.content.getNewsChannels
 import org.mozilla.tv.firefox.channels.content.getSportsChannels
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileImageUtilWrapper
@@ -135,9 +134,8 @@ class ChannelRepo(
         .autoConnect(0)
     private val blacklistedSportsIds = BehaviorSubject.createDefault(loadBlackList(TileSource.SPORTS))
 
-    private val bundledMusicTiles = Observable.just(ChannelContent.getMusicChannels())
-        .replay(1)
-        .autoConnect(0)
+    private val bundledMusicTiles = ChannelContent.musicChannels
+            .observeOn(AndroidSchedulers.mainThread())
     private val blacklistedMusicIds = BehaviorSubject.createDefault(loadBlackList(TileSource.MUSIC))
 }
 
