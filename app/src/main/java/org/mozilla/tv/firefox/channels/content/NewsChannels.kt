@@ -9,6 +9,10 @@ import org.mozilla.tv.firefox.R
 import org.mozilla.tv.firefox.channels.ChannelTile
 import org.mozilla.tv.firefox.channels.TileSource
 import org.mozilla.tv.firefox.channels.content.ChannelContent.setImage
+import org.mozilla.tv.firefox.channels.pinnedtile.CustomPinnedTile
+
+val _customNewsTiles: BehaviorSubject<MutableList<CustomPinnedTile>> = BehaviorSubject.create()
+
 
 val newsTiles : MutableList<ChannelTile> = mutableListOf(
     ChannelTile(
@@ -85,17 +89,15 @@ val newsTiles : MutableList<ChannelTile> = mutableListOf(
     )
 )
 
-fun ChannelContent.getNewsChannels() = newsTiles
-
-val _newsChannels: BehaviorSubject<List<ChannelTile>> = BehaviorSubject.create()
+fun ChannelContent.getDefaultNewsTiles(): List<ChannelTile> = newsTiles
 
 
-fun ChannelContent.addToNewsChannel(channelTile: ChannelTile) {
-    newsTiles.add(0, channelTile)
-    refreshNewsTiles()
+fun ChannelContent.refreshNewsTiles(tiles: MutableList<CustomPinnedTile>) {
+    _customNewsTiles.onNext(tiles)
 }
 
-fun ChannelContent.refreshNewsTiles() {
-    _newsChannels.onNext(ChannelContent.getNewsChannels())
-
+fun ChannelContent.addNewsTile(tile: CustomPinnedTile) {
+    _customNewsTiles.value?.add(tile)
 }
+
+fun ChannelContent.getCustomNewsTiles(): MutableList<CustomPinnedTile> = _customNewsTiles.value!!

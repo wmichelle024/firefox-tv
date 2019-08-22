@@ -35,7 +35,7 @@ class ChannelListAdapter(
         this.context = context
     }
 
-    fun onCreateDialog(channel: Int = R.string.pinned_tile_channel_title) {
+    fun onCreateDialog(title: Int = R.string.pinned_tile_channel_title) {
         dialog = Dialog(context, R.style.DialogStyle)
         dialog.setContentView(R.layout.dialog_pin_site)
         spinnerAdapter =  ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, channelTitles.map { context.resources.getString(it) }).apply {
@@ -44,20 +44,20 @@ class ChannelListAdapter(
         spinner = dialog.pin_channel_spinner.apply {
             this.adapter = spinnerAdapter
         }
-        setSelected(channel)
+        setSelected(title)
         dialog.titleText.setText("Add site to:")
         dialog.window?.setDimAmount(0.90f)
         dialog.confirm_action.setOnClickListener {
-            val title = channelTitles[spinner.selectedItemPosition]
+            val channel = channelTitles[spinner.selectedItemPosition]
             val url = sessionRepo.state.blockingFirst().currentUrl
             val pinTile = CustomPinnedTile(
                     id = UUID.randomUUID(),
                     url = url,
                     title = url)
-            when (title) {
+            when (channel) {
                 R.string.music_channel_title -> channelContentRepo.addToMusicChannel(pinTile)
                 R.string.sports_channel_title -> channelContentRepo.addToSportsChannel(pinTile)
-//                R.string.news_channel_title -> ChannelContent.addToNewsChannel(channelTile)
+                R.string.news_channel_title -> channelContentRepo.addToNewsChannel(pinTile)
                 else -> pinnedTileRepo.addPinnedTile(url,sessionRepo.currentURLScreenshot())
             }
             dialog.dismiss()

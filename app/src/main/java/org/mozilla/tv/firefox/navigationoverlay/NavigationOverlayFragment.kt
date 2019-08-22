@@ -232,7 +232,6 @@ class NavigationOverlayFragment : Fragment() {
                 .addTo(compositeDisposable)
 
         fxaButton.isVisible = serviceLocator.experimentsProvider.shouldShowSendTab()
-        ChannelContent.refreshNewsTiles()
     }
 
     override fun onStop() {

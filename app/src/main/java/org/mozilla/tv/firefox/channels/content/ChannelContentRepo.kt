@@ -19,6 +19,7 @@ class ChannelContentRepo(
     init {
         ChannelContent.refreshMusicTiles(loadCustomTiles(R.string.music_channel_title))
         ChannelContent.refreshSportsTiles(loadCustomTiles(R.string.sports_channel_title))
+        ChannelContent.refreshNewsTiles(loadCustomTiles(R.string.news_channel_title))
     }
 
     fun persistCustomToChannel(channelId: Int, tiles: MutableList<CustomPinnedTile>) {
@@ -60,5 +61,11 @@ class ChannelContentRepo(
         ChannelContent.addSportsTile(channelTile)
         persistCustomToChannel(R.string.sports_channel_title, ChannelContent.getCustomSportsTiles())
         ChannelContent.refreshSportsTiles(loadCustomTiles(R.string.sports_channel_title))
+    }
+
+    fun addToNewsChannel(channelTile: CustomPinnedTile) {
+        ChannelContent.addNewsTile(channelTile)
+        persistCustomToChannel(R.string.news_channel_title, ChannelContent.getCustomNewsTiles())
+        ChannelContent.refreshNewsTiles(loadCustomTiles(R.string.news_channel_title))
     }
 }

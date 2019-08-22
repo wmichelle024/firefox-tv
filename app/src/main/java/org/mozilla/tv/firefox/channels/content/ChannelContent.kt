@@ -26,5 +26,5 @@ object ChannelContent {
 
     val customMusicTiles : Observable<MutableList<CustomPinnedTile>> = _customMusicTiles.hide()
     val customSportsTiles : Observable<MutableList<CustomPinnedTile>> = _customSportsTiles.hide()
-    val newsChannels : Observable<List<ChannelTile>> = _newsChannels.hide()
+    val customNewsChannels : Observable<MutableList<CustomPinnedTile>> = _customNewsTiles.hide()
 }

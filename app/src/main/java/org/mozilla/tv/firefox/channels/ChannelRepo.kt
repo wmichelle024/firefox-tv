@@ -15,6 +15,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import org.mozilla.tv.firefox.channels.content.ChannelContent
 import org.mozilla.tv.firefox.channels.content.getDefaultMusicTiles
+import org.mozilla.tv.firefox.channels.content.getDefaultNewsTiles
 import org.mozilla.tv.firefox.channels.content.getDefaultSportsTiles
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileImageUtilWrapper
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileRepo
@@ -48,8 +49,11 @@ class ChannelRepo(
     fun getPinnedTiles(): Observable<List<ChannelTile>> =
         pinnedTiles.filterNotBlacklisted(blacklistedPinnedIds)
 
-    fun getNewsTiles(): Observable<List<ChannelTile>> =
-        bundledNewsTiles.filterNotBlacklisted(blacklistedNewsIds)
+    fun getNewsTiles(): Observable<List<ChannelTile>> {
+        val bundled = bundledNewsTiles.filterNotBlacklisted(blacklistedNewsIds)
+        return Observables.combineLatest(bundled, customNewsTiles)
+                .map { (bundled, customNewsTiles) -> bundled + customNewsTiles}
+    }
 
     fun getSportsTiles(): Observable<List<ChannelTile>> {
         val bundled = bundledSportsTiles.filterNotBlacklisted(blacklistedSportsIds)
@@ -130,7 +134,12 @@ class ChannelRepo(
         .map { it.values.map { it.toChannelTile(imageUtilityWrapper, formattedDomainWrapper) } }
         .observeOn(AndroidSchedulers.mainThread())
     private val blacklistedPinnedIds = BehaviorSubject.createDefault(loadBlackList(TileSource.BUNDLED))
-    private val bundledNewsTiles = ChannelContent.newsChannels
+    private val bundledNewsTiles = Observable.just(ChannelContent.getDefaultNewsTiles())
+    private val customNewsTiles: Observable<List<ChannelTile>> = ChannelContent.customNewsChannels
+            .observeOn(Schedulers.io())
+            .map {
+                it.map {
+                    it.toChannelTile(imageUtilityWrapper, formattedDomainWrapper)} }
             .observeOn(AndroidSchedulers.mainThread())
     private val blacklistedNewsIds = BehaviorSubject.createDefault(loadBlackList(TileSource.NEWS))
 
