@@ -51,7 +51,6 @@ import org.mozilla.tv.firefox.channels.DefaultChannelFactory
 import org.mozilla.tv.firefox.channels.SettingsChannelAdapter
 import org.mozilla.tv.firefox.channels.SettingsScreen
 import org.mozilla.tv.firefox.channels.content.ChannelContent
-import org.mozilla.tv.firefox.channels.content.refreshMusicTiles
 import org.mozilla.tv.firefox.channels.content.refreshNewsTiles
 import org.mozilla.tv.firefox.channels.content.refreshSportsTiles
 import org.mozilla.tv.firefox.pocket.PocketViewModel
@@ -233,7 +232,7 @@ class NavigationOverlayFragment : Fragment() {
                 .addTo(compositeDisposable)
 
         fxaButton.isVisible = serviceLocator.experimentsProvider.shouldShowSendTab()
-        ChannelContent.refreshMusicTiles()
+        //ChannelContent.refreshMusicTiles()
         ChannelContent.refreshSportsTiles()
         ChannelContent.refreshNewsTiles()
     }

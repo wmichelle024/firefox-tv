@@ -8,18 +8,21 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import kotlinx.android.synthetic.main.dialog_pin_site.*
 import kotlinx.android.synthetic.main.dialog_pin_site.cancelButton
+import org.json.JSONArray
 import org.mozilla.tv.firefox.R
 import org.mozilla.tv.firefox.channels.content.ChannelContent
-import org.mozilla.tv.firefox.channels.content.addToMusicChannel
+import org.mozilla.tv.firefox.channels.content.ChannelContentRepo
 import org.mozilla.tv.firefox.channels.content.addToNewsChannel
 import org.mozilla.tv.firefox.channels.content.addToSportsChannel
+import org.mozilla.tv.firefox.channels.pinnedtile.CustomPinnedTile
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileRepo
 import org.mozilla.tv.firefox.session.SessionRepo
 import java.util.*
 
 class ChannelListAdapter(
         private val sessionRepo: SessionRepo,
-        private val pinnedTileRepo: PinnedTileRepo
+        private val pinnedTileRepo: PinnedTileRepo,
+        private val channelContentRepo: ChannelContentRepo
 ) {
 
     private lateinit var context: Context
@@ -53,17 +56,14 @@ class ChannelListAdapter(
         dialog.confirm_action.setOnClickListener {
             val title = channelTitles[spinner.selectedItemPosition]
             val url = sessionRepo.state.blockingFirst().currentUrl
-            val channelTile = ChannelTile(
-                    id = UUID.randomUUID().toString(),
+            val channelTile = CustomPinnedTile(
+                    id = UUID.randomUUID(),
                     url = url,
-                    title = url,
-                    subtitle = null,
-                    setImage = ChannelContent.setImage(R.drawable.tile_music_npr),
-                    tileSource = TileSource.MUSIC)
+                    title = url)
             when (title) {
-                R.string.music_channel_title -> ChannelContent.addToMusicChannel(channelTile)
-                R.string.sports_channel_title -> ChannelContent.addToSportsChannel(channelTile)
-                R.string.news_channel_title -> ChannelContent.addToNewsChannel(channelTile)
+                R.string.music_channel_title -> channelContentRepo.addToMusicChannel(channelTile)
+//                R.string.sports_channel_title -> ChannelContent.addToSportsChannel(channelTile)
+//                R.string.news_channel_title -> ChannelContent.addToNewsChannel(channelTile)
                 else -> pinnedTileRepo.addPinnedTile(url,sessionRepo.currentURLScreenshot())
             }
             dialog.dismiss()

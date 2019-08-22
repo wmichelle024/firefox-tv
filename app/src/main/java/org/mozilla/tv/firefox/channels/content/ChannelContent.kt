@@ -5,8 +5,10 @@
 package org.mozilla.tv.firefox.channels.content
 
 import io.reactivex.Observable
+import org.mozilla.tv.firefox.R
 import org.mozilla.tv.firefox.channels.ChannelTile
 import org.mozilla.tv.firefox.channels.ImageSetStrategy
+import org.mozilla.tv.firefox.channels.pinnedtile.CustomPinnedTile
 
 /**
  * Namespace for retrieval of data objects that back 'TV Guide'-style channel
@@ -21,7 +23,8 @@ object ChannelContent {
      * for an example.
      */
     fun setImage(id: Int): ImageSetStrategy = ImageSetStrategy.ById(id)
-    val musicChannels: Observable<List<ChannelTile>> = _musicChannels.hide()
+
+    val customMusicTiles : Observable<MutableList<CustomPinnedTile>> = _customMusicTiles.hide()
     val sportsChannels : Observable<List<ChannelTile>> = _sportsChannels.hide()
     val newsChannels : Observable<List<ChannelTile>> = _newsChannels.hide()
 }

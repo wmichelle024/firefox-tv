@@ -4,14 +4,15 @@
 
 package org.mozilla.tv.firefox.channels.content
 
-import androidx.annotation.UiThread
 import io.reactivex.subjects.BehaviorSubject
 import org.mozilla.tv.firefox.R
 import org.mozilla.tv.firefox.channels.ChannelTile
 import org.mozilla.tv.firefox.channels.TileSource
+import org.mozilla.tv.firefox.channels.pinnedtile.CustomPinnedTile
 
+val _customMusicTiles: BehaviorSubject<MutableList<CustomPinnedTile>> = BehaviorSubject.create()
 
-var musicTiles: MutableList<ChannelTile> = mutableListOf(
+private var musicTiles: MutableList<ChannelTile> = mutableListOf(
         ChannelTile(
                 url = "https://www.npr.org/stations/",
                 title = "NPR",
@@ -30,18 +31,14 @@ var musicTiles: MutableList<ChannelTile> = mutableListOf(
         )
 )
 
-val _musicChannels: BehaviorSubject<List<ChannelTile>> = BehaviorSubject.create()
+fun ChannelContent.getDefaultMusicTiles(): List<ChannelTile> = musicTiles
 
-
-fun ChannelContent.getMusicTiles() : List<ChannelTile> = musicTiles
-
-
-fun ChannelContent.addToMusicChannel(channelTile: ChannelTile) {
-    musicTiles.add(0,channelTile)
-    refreshMusicTiles()
+fun ChannelContent.refreshMusicTiles(tiles: MutableList<CustomPinnedTile>) {
+        _customMusicTiles.onNext(tiles)
 }
 
-fun ChannelContent.refreshMusicTiles() {
-    _musicChannels.onNext(ChannelContent.getMusicTiles())
-
+fun ChannelContent.addMusicTile(tile: CustomPinnedTile) {
+        _customMusicTiles.value?.add(tile)
 }
+
+fun ChannelContent.getCustomMusicTiles(): MutableList<CustomPinnedTile> = _customMusicTiles.value!!

@@ -24,6 +24,7 @@ import org.mozilla.tv.firefox.ext.getAccessibilityManager
 import org.mozilla.tv.firefox.ext.webRenderComponents
 import org.mozilla.tv.firefox.framework.FrameworkRepo
 import org.mozilla.tv.firefox.channels.ChannelRepo
+import org.mozilla.tv.firefox.channels.content.ChannelContentRepo
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileImageUtilWrapper
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileRepo
 import org.mozilla.tv.firefox.fathom.Fathom
@@ -80,7 +81,8 @@ open class ServiceLocator(val app: Application) {
     val intentLiveData by lazy { MutableLiveData<Consumable<ValidatedIntentData?>>() }
     val fretboardProvider: FretboardProvider by lazy { FretboardProvider(app) }
     val experimentsProvider by lazy { ExperimentsProvider(fretboardProvider.fretboard, app) }
-    val channelListAdapter by lazy{ ChannelListAdapter(sessionRepo, pinnedTileRepo)}
+    val channelContentRepo by lazy { ChannelContentRepo(app) }
+    val channelListAdapter by lazy{ ChannelListAdapter(sessionRepo, pinnedTileRepo, channelContentRepo)}
     val fathom by lazy { Fathom(app, channelListAdapter) }
     val turboMode: TurboMode by lazy { TurboMode(app) }
     val viewModelFactory by lazy { ViewModelFactory(this, app) }

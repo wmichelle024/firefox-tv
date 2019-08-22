@@ -14,6 +14,7 @@ import io.reactivex.rxkotlin.Observables
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import org.mozilla.tv.firefox.channels.content.ChannelContent
+import org.mozilla.tv.firefox.channels.content.getDefaultMusicTiles
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileImageUtilWrapper
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileRepo
 import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
@@ -52,8 +53,11 @@ class ChannelRepo(
     fun getSportsTiles(): Observable<List<ChannelTile>> =
         bundledSportsTiles.filterNotBlacklisted(blacklistedSportsIds)
 
-    fun getMusicTiles(): Observable<List<ChannelTile>> =
-        bundledMusicTiles.filterNotBlacklisted(blacklistedMusicIds)
+    fun getMusicTiles(): Observable<List<ChannelTile>> {
+        val bundled = bundledMusicTiles.filterNotBlacklisted(blacklistedMusicIds)
+       return Observables.combineLatest(bundled, customMusicTiles)
+               .map { (bundled, customMusicTiles) -> bundled + customMusicTiles}
+    }
 
     fun removeChannelContent(tileData: ChannelTile) {
         when (tileData.tileSource) {
@@ -130,8 +134,14 @@ class ChannelRepo(
             .observeOn(AndroidSchedulers.mainThread())
     private val blacklistedSportsIds = BehaviorSubject.createDefault(loadBlackList(TileSource.SPORTS))
 
-    private val bundledMusicTiles = ChannelContent.musicChannels
+    private val customMusicTiles: Observable<List<ChannelTile>> = ChannelContent.customMusicTiles
+            .observeOn(Schedulers.io())
+            .map {
+                it.map {
+                    it.toChannelTile(imageUtilityWrapper, formattedDomainWrapper)} }
             .observeOn(AndroidSchedulers.mainThread())
+    private val bundledMusicTiles = Observable.just(ChannelContent.getDefaultMusicTiles())
+
     private val blacklistedMusicIds = BehaviorSubject.createDefault(loadBlackList(TileSource.MUSIC))
 }
 
