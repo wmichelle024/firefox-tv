@@ -15,6 +15,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import org.mozilla.tv.firefox.channels.content.ChannelContent
 import org.mozilla.tv.firefox.channels.content.getDefaultMusicTiles
+import org.mozilla.tv.firefox.channels.content.getDefaultSportsTiles
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileImageUtilWrapper
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileRepo
 import org.mozilla.tv.firefox.telemetry.TelemetryIntegration
@@ -50,8 +51,11 @@ class ChannelRepo(
     fun getNewsTiles(): Observable<List<ChannelTile>> =
         bundledNewsTiles.filterNotBlacklisted(blacklistedNewsIds)
 
-    fun getSportsTiles(): Observable<List<ChannelTile>> =
-        bundledSportsTiles.filterNotBlacklisted(blacklistedSportsIds)
+    fun getSportsTiles(): Observable<List<ChannelTile>> {
+        val bundled = bundledSportsTiles.filterNotBlacklisted(blacklistedSportsIds)
+        return Observables.combineLatest(bundled, customSportsTiles)
+                .map { (bundled, customSportsTiles) -> bundled + customSportsTiles}
+    }
 
     fun getMusicTiles(): Observable<List<ChannelTile>> {
         val bundled = bundledMusicTiles.filterNotBlacklisted(blacklistedMusicIds)
@@ -130,8 +134,14 @@ class ChannelRepo(
             .observeOn(AndroidSchedulers.mainThread())
     private val blacklistedNewsIds = BehaviorSubject.createDefault(loadBlackList(TileSource.NEWS))
 
-    private val bundledSportsTiles = ChannelContent.sportsChannels
+    private val bundledSportsTiles = Observable.just(ChannelContent.getDefaultSportsTiles())
+    private val customSportsTiles: Observable<List<ChannelTile>> = ChannelContent.customSportsTiles
+            .observeOn(Schedulers.io())
+            .map {
+                it.map {
+                    it.toChannelTile(imageUtilityWrapper, formattedDomainWrapper)} }
             .observeOn(AndroidSchedulers.mainThread())
+
     private val blacklistedSportsIds = BehaviorSubject.createDefault(loadBlackList(TileSource.SPORTS))
 
     private val customMusicTiles: Observable<List<ChannelTile>> = ChannelContent.customMusicTiles

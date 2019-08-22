@@ -18,6 +18,7 @@ class ChannelContentRepo(
 
     init {
         ChannelContent.refreshMusicTiles(loadCustomTiles(R.string.music_channel_title))
+        ChannelContent.refreshSportsTiles(loadCustomTiles(R.string.sports_channel_title))
     }
 
     fun persistCustomToChannel(channelId: Int, tiles: MutableList<CustomPinnedTile>) {
@@ -40,18 +41,24 @@ class ChannelContentRepo(
             else -> "Pinned (TODO)"
         }
         val tilesJSONArray = JSONArray(_sharedPreferences.getString(channel, "[]"))
-        val lhm = mutableListOf<CustomPinnedTile>()
+        val tileList = mutableListOf<CustomPinnedTile>()
         for (i in 0 until tilesJSONArray.length()) {
             val tileJSON = tilesJSONArray.getJSONObject(i)
             val tile = CustomPinnedTile.fromJSONObject(tileJSON)
-            lhm.add(tile)
+            tileList.add(tile)
         }
-        return lhm
+        return tileList
     }
 
     fun addToMusicChannel(channelTile: CustomPinnedTile) {
         ChannelContent.addMusicTile(channelTile)
         persistCustomToChannel(R.string.music_channel_title, ChannelContent.getCustomMusicTiles())
         ChannelContent.refreshMusicTiles(loadCustomTiles(R.string.music_channel_title))
+    }
+
+    fun addToSportsChannel(channelTile: CustomPinnedTile) {
+        ChannelContent.addSportsTile(channelTile)
+        persistCustomToChannel(R.string.sports_channel_title, ChannelContent.getCustomSportsTiles())
+        ChannelContent.refreshSportsTiles(loadCustomTiles(R.string.sports_channel_title))
     }
 }

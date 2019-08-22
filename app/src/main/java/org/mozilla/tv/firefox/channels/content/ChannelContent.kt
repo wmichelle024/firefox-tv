@@ -25,6 +25,6 @@ object ChannelContent {
     fun setImage(id: Int): ImageSetStrategy = ImageSetStrategy.ById(id)
 
     val customMusicTiles : Observable<MutableList<CustomPinnedTile>> = _customMusicTiles.hide()
-    val sportsChannels : Observable<List<ChannelTile>> = _sportsChannels.hide()
+    val customSportsTiles : Observable<MutableList<CustomPinnedTile>> = _customSportsTiles.hide()
     val newsChannels : Observable<List<ChannelTile>> = _newsChannels.hide()
 }

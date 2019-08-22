@@ -9,9 +9,11 @@ import org.mozilla.tv.firefox.R
 import org.mozilla.tv.firefox.channels.ChannelTile
 import org.mozilla.tv.firefox.channels.TileSource
 import org.mozilla.tv.firefox.channels.content.ChannelContent.setImage
+import org.mozilla.tv.firefox.channels.pinnedtile.CustomPinnedTile
 
+val _customSportsTiles: BehaviorSubject<MutableList<CustomPinnedTile>> = BehaviorSubject.create()
 
-val sportsTiles: MutableList<ChannelTile> = mutableListOf(
+private val sportsTiles: MutableList<ChannelTile> = mutableListOf(
         ChannelTile(
                 url = "https://www.nbcsports.com/video",
                 title = "NBC Sports",
@@ -30,19 +32,17 @@ val sportsTiles: MutableList<ChannelTile> = mutableListOf(
         )
 )
 
-fun ChannelContent.getSportsChannels(): List<ChannelTile> = sportsTiles
+fun ChannelContent.getDefaultSportsTiles(): List<ChannelTile> = sportsTiles
 
 
-val _sportsChannels: BehaviorSubject<List<ChannelTile>> = BehaviorSubject.create()
-
-
-fun ChannelContent.addToSportsChannel(channelTile: ChannelTile) {
-    sportsTiles.add(0, channelTile)
-    refreshSportsTiles()
+fun ChannelContent.addSportsTile(tile: CustomPinnedTile) {
+    _customSportsTiles.value?.add(tile)
 }
 
-fun ChannelContent.refreshSportsTiles() {
-    _sportsChannels.onNext(ChannelContent.getSportsChannels())
-
+fun ChannelContent.refreshSportsTiles(tiles: MutableList<CustomPinnedTile>) {
+    _customSportsTiles.onNext(tiles)
 }
+
+fun ChannelContent.getCustomSportsTiles(): MutableList<CustomPinnedTile> = _customSportsTiles.value!!
+
 

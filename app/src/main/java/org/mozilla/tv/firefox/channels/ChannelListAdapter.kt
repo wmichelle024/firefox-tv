@@ -2,18 +2,12 @@ package org.mozilla.tv.firefox.channels
 
 import android.app.Dialog
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import kotlinx.android.synthetic.main.dialog_pin_site.*
 import kotlinx.android.synthetic.main.dialog_pin_site.cancelButton
-import org.json.JSONArray
 import org.mozilla.tv.firefox.R
-import org.mozilla.tv.firefox.channels.content.ChannelContent
 import org.mozilla.tv.firefox.channels.content.ChannelContentRepo
-import org.mozilla.tv.firefox.channels.content.addToNewsChannel
-import org.mozilla.tv.firefox.channels.content.addToSportsChannel
 import org.mozilla.tv.firefox.channels.pinnedtile.CustomPinnedTile
 import org.mozilla.tv.firefox.channels.pinnedtile.PinnedTileRepo
 import org.mozilla.tv.firefox.session.SessionRepo
@@ -56,13 +50,13 @@ class ChannelListAdapter(
         dialog.confirm_action.setOnClickListener {
             val title = channelTitles[spinner.selectedItemPosition]
             val url = sessionRepo.state.blockingFirst().currentUrl
-            val channelTile = CustomPinnedTile(
+            val pinTile = CustomPinnedTile(
                     id = UUID.randomUUID(),
                     url = url,
                     title = url)
             when (title) {
-                R.string.music_channel_title -> channelContentRepo.addToMusicChannel(channelTile)
-//                R.string.sports_channel_title -> ChannelContent.addToSportsChannel(channelTile)
+                R.string.music_channel_title -> channelContentRepo.addToMusicChannel(pinTile)
+                R.string.sports_channel_title -> channelContentRepo.addToSportsChannel(pinTile)
 //                R.string.news_channel_title -> ChannelContent.addToNewsChannel(channelTile)
                 else -> pinnedTileRepo.addPinnedTile(url,sessionRepo.currentURLScreenshot())
             }
