@@ -38,7 +38,7 @@ fun ChannelContent.refreshMusicTiles(tiles: MutableList<CustomPinnedTile>) {
 }
 
 fun ChannelContent.addMusicTile(tile: CustomPinnedTile) {
-        _customMusicTiles.value?.add(tile)
+        _customMusicTiles.value?.add(0, tile)
 }
 
 fun ChannelContent.getCustomMusicTiles(): MutableList<CustomPinnedTile> = _customMusicTiles.value!!

@@ -5,8 +5,6 @@
 package org.mozilla.tv.firefox.channels.content
 
 import io.reactivex.Observable
-import org.mozilla.tv.firefox.R
-import org.mozilla.tv.firefox.channels.ChannelTile
 import org.mozilla.tv.firefox.channels.ImageSetStrategy
 import org.mozilla.tv.firefox.channels.pinnedtile.CustomPinnedTile
 
@@ -24,7 +22,7 @@ object ChannelContent {
      */
     fun setImage(id: Int): ImageSetStrategy = ImageSetStrategy.ById(id)
 
-    val customMusicTiles : Observable<MutableList<CustomPinnedTile>> = _customMusicTiles.hide()
-    val customSportsTiles : Observable<MutableList<CustomPinnedTile>> = _customSportsTiles.hide()
-    val customNewsChannels : Observable<MutableList<CustomPinnedTile>> = _customNewsTiles.hide()
+    val customMusicTiles: Observable<MutableList<CustomPinnedTile>> = _customMusicTiles.hide()
+    val customSportsTiles: Observable<MutableList<CustomPinnedTile>> = _customSportsTiles.hide()
+    val customNewsChannels: Observable<MutableList<CustomPinnedTile>> = _customNewsTiles.hide()
 }

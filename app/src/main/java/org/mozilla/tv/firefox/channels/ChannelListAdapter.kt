@@ -14,9 +14,9 @@ import org.mozilla.tv.firefox.session.SessionRepo
 import java.util.*
 
 class ChannelListAdapter(
-        private val sessionRepo: SessionRepo,
-        private val pinnedTileRepo: PinnedTileRepo,
-        private val channelContentRepo: ChannelContentRepo
+    private val sessionRepo: SessionRepo,
+    private val pinnedTileRepo: PinnedTileRepo,
+    private val channelContentRepo: ChannelContentRepo
 ) {
 
     private lateinit var context: Context
@@ -38,8 +38,9 @@ class ChannelListAdapter(
     fun onCreateDialog(title: Int = R.string.pinned_tile_channel_title) {
         dialog = Dialog(context, R.style.DialogStyle)
         dialog.setContentView(R.layout.dialog_pin_site)
-        spinnerAdapter =  ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, channelTitles.map { context.resources.getString(it) }).apply {
-            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, channelTitles.map {
+            context.resources.getString(it) }).apply {
+                setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         }
         spinner = dialog.pin_channel_spinner.apply {
             this.adapter = spinnerAdapter
@@ -58,7 +59,7 @@ class ChannelListAdapter(
                 R.string.music_channel_title -> channelContentRepo.addToMusicChannel(pinTile)
                 R.string.sports_channel_title -> channelContentRepo.addToSportsChannel(pinTile)
                 R.string.news_channel_title -> channelContentRepo.addToNewsChannel(pinTile)
-                else -> pinnedTileRepo.addPinnedTile(url,sessionRepo.currentURLScreenshot())
+                else -> pinnedTileRepo.addPinnedTile(url, sessionRepo.currentURLScreenshot())
             }
             dialog.dismiss()
         }
@@ -73,5 +74,4 @@ class ChannelListAdapter(
         var index = channelTitles.indexOf(title)
         spinner.setSelection(index)
     }
-
 }

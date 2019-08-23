@@ -52,19 +52,19 @@ class ChannelRepo(
     fun getNewsTiles(): Observable<List<ChannelTile>> {
         val bundled = bundledNewsTiles.filterNotBlacklisted(blacklistedNewsIds)
         return Observables.combineLatest(bundled, customNewsTiles)
-                .map { (bundled, customNewsTiles) -> bundled + customNewsTiles}
+                .map { (bundled, customNewsTiles) -> customNewsTiles + bundled }
     }
 
     fun getSportsTiles(): Observable<List<ChannelTile>> {
         val bundled = bundledSportsTiles.filterNotBlacklisted(blacklistedSportsIds)
         return Observables.combineLatest(bundled, customSportsTiles)
-                .map { (bundled, customSportsTiles) -> bundled + customSportsTiles}
+                .map { (bundled, customSportsTiles) -> customSportsTiles + bundled }
     }
 
     fun getMusicTiles(): Observable<List<ChannelTile>> {
         val bundled = bundledMusicTiles.filterNotBlacklisted(blacklistedMusicIds)
-       return Observables.combineLatest(bundled, customMusicTiles)
-               .map { (bundled, customMusicTiles) -> bundled + customMusicTiles}
+        return Observables.combineLatest(bundled, customMusicTiles)
+            .map { (bundled, customMusicTiles) -> customMusicTiles + bundled }
     }
 
     fun removeChannelContent(tileData: ChannelTile) {
@@ -139,7 +139,7 @@ class ChannelRepo(
             .observeOn(Schedulers.io())
             .map {
                 it.map {
-                    it.toChannelTile(imageUtilityWrapper, formattedDomainWrapper)} }
+                    it.toChannelTile(imageUtilityWrapper, formattedDomainWrapper) } }
             .observeOn(AndroidSchedulers.mainThread())
     private val blacklistedNewsIds = BehaviorSubject.createDefault(loadBlackList(TileSource.NEWS))
 
@@ -148,7 +148,7 @@ class ChannelRepo(
             .observeOn(Schedulers.io())
             .map {
                 it.map {
-                    it.toChannelTile(imageUtilityWrapper, formattedDomainWrapper)} }
+                    it.toChannelTile(imageUtilityWrapper, formattedDomainWrapper) } }
             .observeOn(AndroidSchedulers.mainThread())
 
     private val blacklistedSportsIds = BehaviorSubject.createDefault(loadBlackList(TileSource.SPORTS))
@@ -157,7 +157,7 @@ class ChannelRepo(
             .observeOn(Schedulers.io())
             .map {
                 it.map {
-                    it.toChannelTile(imageUtilityWrapper, formattedDomainWrapper)} }
+                    it.toChannelTile(imageUtilityWrapper, formattedDomainWrapper) } }
             .observeOn(AndroidSchedulers.mainThread())
     private val bundledMusicTiles = Observable.just(ChannelContent.getDefaultMusicTiles())
 

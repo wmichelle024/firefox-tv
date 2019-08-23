@@ -1,7 +1,6 @@
 package org.mozilla.tv.firefox.fathom
 
 import android.content.Context
-import android.util.Log
 import android.webkit.JavascriptInterface
 import androidx.annotation.UiThread
 import mozilla.components.concept.engine.EngineView
@@ -11,12 +10,11 @@ import org.mozilla.tv.firefox.ext.addJavascriptInterface
 import org.mozilla.tv.firefox.ext.runFathomScript
 
 class Fathom(
-        private val context: Context,
-        private val channelListAdapter: ChannelListAdapter
+    private val context: Context,
+    private val channelListAdapter: ChannelListAdapter
 ) {
 
     private var engineView: EngineView? = null
-    //private var sessionIsLoadingObserver: SessionIsLoadingObserver? = null
 
     val script = context.resources.openRawResource(R.raw.extract).use { it.bufferedReader().readText() }
 
@@ -24,7 +22,6 @@ class Fathom(
         this.engineView = engineView.apply {
             addJavascriptInterface(FathomObject(), "java")
         }
-
     }
 
     inner class FathomObject {
@@ -42,5 +39,4 @@ class Fathom(
     fun runFathomScript() {
         engineView?.runFathomScript(script)
     }
-
 }

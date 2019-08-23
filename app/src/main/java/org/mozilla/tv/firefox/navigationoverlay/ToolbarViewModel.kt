@@ -172,5 +172,4 @@ class ToolbarViewModel(
     private fun hideOverlay() {
         _events.onNext(Consumable.from(Action.SetOverlayVisible(false)))
     }
-
 }

@@ -82,7 +82,7 @@ open class ServiceLocator(val app: Application) {
     val fretboardProvider: FretboardProvider by lazy { FretboardProvider(app) }
     val experimentsProvider by lazy { ExperimentsProvider(fretboardProvider.fretboard, app) }
     val channelContentRepo by lazy { ChannelContentRepo(app) }
-    val channelListAdapter by lazy{ ChannelListAdapter(sessionRepo, pinnedTileRepo, channelContentRepo)}
+    val channelListAdapter by lazy { ChannelListAdapter(sessionRepo, pinnedTileRepo, channelContentRepo) }
     val fathom by lazy { Fathom(app, channelListAdapter) }
     val turboMode: TurboMode by lazy { TurboMode(app) }
     val viewModelFactory by lazy { ViewModelFactory(this, app) }

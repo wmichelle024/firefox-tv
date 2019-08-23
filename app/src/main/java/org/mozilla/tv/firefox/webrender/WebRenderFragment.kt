@@ -45,7 +45,6 @@ import org.mozilla.tv.firefox.ext.resetView
 import org.mozilla.tv.firefox.ext.scrollByClamped
 import org.mozilla.tv.firefox.ext.serviceLocator
 import org.mozilla.tv.firefox.ext.webRenderComponents
-import org.mozilla.tv.firefox.fathom.Fathom
 import org.mozilla.tv.firefox.hint.HintBinder
 import org.mozilla.tv.firefox.hint.InactiveHintViewModel
 import org.mozilla.tv.firefox.session.SessionRepo

@@ -8,8 +8,8 @@ import org.mozilla.tv.firefox.channels.pinnedtile.CustomPinnedTile
 private const val PREF_HOME_TILES = "homeTiles"
 
 class ChannelContentRepo(
-        private val applicationContext: Context)
-{
+    private val applicationContext: Context
+) {
     private val CUSTOM_MUSIC_TILES = "customMusicTiles"
     private val CUSTOM_NEWS_TILES = "customNewsTiles"
     private val CUSTOM_SPORTS_TILES = "customSportsTiles"
@@ -23,7 +23,7 @@ class ChannelContentRepo(
     }
 
     fun persistCustomToChannel(channelId: Int, tiles: MutableList<CustomPinnedTile>) {
-        val channel : String = when (channelId) {
+        val channel: String = when (channelId) {
             R.string.music_channel_title -> CUSTOM_MUSIC_TILES
             R.string.sports_channel_title -> CUSTOM_SPORTS_TILES
             R.string.news_channel_title -> CUSTOM_NEWS_TILES
@@ -35,7 +35,7 @@ class ChannelContentRepo(
     }
 
     fun loadCustomTiles(channelId: Int): MutableList<CustomPinnedTile> {
-        val channel : String = when (channelId) {
+        val channel: String = when (channelId) {
             R.string.music_channel_title -> CUSTOM_MUSIC_TILES
             R.string.sports_channel_title -> CUSTOM_SPORTS_TILES
             R.string.news_channel_title -> CUSTOM_NEWS_TILES

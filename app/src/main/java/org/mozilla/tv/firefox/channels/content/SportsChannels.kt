@@ -34,9 +34,8 @@ private val sportsTiles: MutableList<ChannelTile> = mutableListOf(
 
 fun ChannelContent.getDefaultSportsTiles(): List<ChannelTile> = sportsTiles
 
-
 fun ChannelContent.addSportsTile(tile: CustomPinnedTile) {
-    _customSportsTiles.value?.add(tile)
+    _customSportsTiles.value?.add(0, tile)
 }
 
 fun ChannelContent.refreshSportsTiles(tiles: MutableList<CustomPinnedTile>) {
@@ -44,5 +43,3 @@ fun ChannelContent.refreshSportsTiles(tiles: MutableList<CustomPinnedTile>) {
 }
 
 fun ChannelContent.getCustomSportsTiles(): MutableList<CustomPinnedTile> = _customSportsTiles.value!!
-
-

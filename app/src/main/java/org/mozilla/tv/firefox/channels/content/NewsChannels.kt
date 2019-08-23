@@ -13,8 +13,7 @@ import org.mozilla.tv.firefox.channels.pinnedtile.CustomPinnedTile
 
 val _customNewsTiles: BehaviorSubject<MutableList<CustomPinnedTile>> = BehaviorSubject.create()
 
-
-val newsTiles : MutableList<ChannelTile> = mutableListOf(
+val newsTiles: MutableList<ChannelTile> = mutableListOf(
     ChannelTile(
         url = "https://us.cnn.com/videos",
         title = "CNN",
@@ -91,13 +90,12 @@ val newsTiles : MutableList<ChannelTile> = mutableListOf(
 
 fun ChannelContent.getDefaultNewsTiles(): List<ChannelTile> = newsTiles
 
-
 fun ChannelContent.refreshNewsTiles(tiles: MutableList<CustomPinnedTile>) {
     _customNewsTiles.onNext(tiles)
 }
 
 fun ChannelContent.addNewsTile(tile: CustomPinnedTile) {
-    _customNewsTiles.value?.add(tile)
+    _customNewsTiles.value?.add(0, tile)
 }
 
 fun ChannelContent.getCustomNewsTiles(): MutableList<CustomPinnedTile> = _customNewsTiles.value!!
